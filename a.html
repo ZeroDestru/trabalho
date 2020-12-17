@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <meta charset='utf-8'/>
+        <style>
+
+            .zoom {
+                display:inline-block;
+                position: relative;
+            }
+            
+            .zoom:after {
+                content:'';
+                display:block; 
+                width:33px; 
+                height:33px; 
+                position:absolute; 
+                top:0;
+                right:0;
+                background:url(icon.png);
+            }
+    
+            .zoom img {
+                display: block;
+            }
+    
+            .zoom img::selection { background-color: transparent; }
+    
+            #ex2 img:hover { cursor: url(grab.cur), default; }
+            #ex2 img:active { cursor: url(grabbed.cur), default; }
+        </style>
+        <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+        <script src='jquery.zoom.js'></script>
+        <script>
+            $(document).ready(function(){
+                $('#ex1').zoom();
+                $('#ex2').zoom({ on:'grab' });
+                $('#ex3').zoom({ on:'click' });			 
+                $('#ex4').zoom({ on:'toggle' });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="foto_p" align="center" class="produto-imagem zoom-on"></div>
+            
+            <div id="wrap" style="top:0px;z-index:9999;position:relative;"><a href="https://images.tcdn.com.br/img/img_prod/716124/barbara7_337_1_20201214220316.jpeg" id="container_thumb" class="container_thumb cloud-zoom" title="HICKMANN 1091 DOURADA" rel="zoomWidth:500,zoomHeight:500,showTitle:false,position:'right',adjustX:-75,adjustY:2" style="max-height: 300px; max-width: 300px; margin: 0px auto; text-align: center; display: block; overflow: hidden; position: relative;">
+            <span class="zoom" id="ex1">
+            <img src="https://images.tcdn.com.br/img/img_prod/716124/barbara7_337_1_20201214220316.jpeg" title="HICKMANN 1091 DOURADA" alt="HICKMANN 1091 DOURADA" id="imgView" class="photo" style="max-height:300px;max-width:300px;margin:0 auto;text-align:center;display:block;border:0;">
+            </span>
+            
+            <!--<span class='zoom' id='ex1'>
+                <img src='https://images.tcdn.com.br/img/img_prod/716124/barbara7_337_1_20201214220316.jpeg' width='300' height='300' alt='Daisy on the Ohoopee'/>
+                <p>Hover</p>
+            </span>-->
+        </div>
+    </body>
+</html>
