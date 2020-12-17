@@ -554,3 +554,331 @@ self.zoomTintImage.after(newImgTint);newImgTint.stop(true).fadeOut(self.options.
 })(jQuery);
 
 -->
+    
+  <script type="text/javascript">
+    function process(quant){
+        var value = parseInt(document.getElementById("quant").value);
+        value+=quant;
+        if(value >= 1){
+            document.getElementById("quant").value = value;
+        }
+    }
+            <meta charset='utf-8'/>
+        <style>
+
+            .zoom {
+                display:inline-block;
+                position: relative;
+            }
+            
+            .zoom:after {
+                content:'';
+                display:block; 
+                width:33px; 
+                height:33px; 
+                position:absolute; 
+                top:0;
+                right:0;
+                background:url(icon.png);
+            }
+    
+            .zoom img {
+                display: block;
+            }
+    
+            .zoom img::selection { background-color: transparent; }
+    
+            #ex2 img:hover { cursor: url(grab.cur), default; }
+            #ex2 img:active { cursor: url(grabbed.cur), default; }
+        </style>
+</script>
+        <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+        <script src='jquery.zoom.js'></script>
+        <script>
+            $(document).ready(function(){
+                $('#ex1').zoom();
+                $('#ex2').zoom({ on:'grab' });
+                $('#ex3').zoom({ on:'click' });			 
+                $('#ex4').zoom({ on:'toggle' });
+            });
+        </script>
+
+<div id="product-container" class="produto-wrapper details" itemtype="http://schema.org/Product">
+
+    <span id="span_erro_carrinho"></span>
+
+
+    <div class="row">
+
+        <div class="col-md-7" id="esquerda">
+            <div class="details__contentBack">
+                <div class="product-gallery{{ settings.inner_zoom ? ' inner-zoom' }}">
+                    <div id="visualBlock">{{ productHelper.gallery() }}</div>
+                    
+                    {% if product.price_offer > 0 %}
+                        {% set percent = ((product.price - product.price_offer) * 100) / product.price %}
+                    {% endif %}
+                    {% if percent %}<span class="tag-discount"><strong>{{ percent|round }}% <small>OFF</small></strong></span>{% endif %}
+
+                    {% set porcentagemDesconto = 100 - ( product.price_offer / product.price ) * 100 %}
+                    {% if porcentagemDesconto < 100 %}
+                      <div class="porcent">
+                          <span>-{{ porcentagemDesconto|number_format }}%</span>
+                      </div>
+                    {% endif %}
+
+                    <p class="info-zoom">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 310.42 310.42" width="20px" height="20px">
+                        <path d="M214.995,36.848C165.898-12.274,85.987-12.293,36.864,36.802C-12.26,85.901-12.281,165.81,36.817,214.932
+                        c41.653,41.675,103.617,48.002,152.013,18.987c0,0,3.498-2.085,6.311,0.732c16.06,16.068,64.246,64.279,64.246,64.279
+                        c12.787,12.795,30.672,15.844,42.019,4.504l1.952-1.952c11.349-11.34,8.308-29.228-4.479-42.021c0,0-48.084-48.108-64.111-64.145
+                        c-2.95-2.952-0.864-6.448-0.864-6.448C262.942,140.489,256.649,78.523,214.995,36.848z M191.7,191.718
+                        c-36.298,36.279-95.342,36.263-131.62-0.035c-36.277-36.297-36.264-95.341,0.034-131.619
+                        c36.296-36.279,95.341-36.263,131.621,0.034C228.011,96.396,227.995,155.438,191.7,191.718z"/>
+                        <path d="M118.416,183.66c0,1.689-0.333,3.406-1.032,5.062c-2.799,6.609-10.429,9.701-17.04,6.9
+                        C58.79,178.025,39.299,129.904,56.896,88.35c2.8-6.609,10.429-9.701,17.04-6.902c6.611,2.802,9.7,10.428,6.902,17.041
+                        c-12.005,28.352,1.293,61.187,29.644,73.191C115.44,173.78,118.418,178.596,118.416,183.66z"/>
+                        </svg> 
+                        Passe o mouse para ver detalhes
+                    </p>
+                </div>
+            </div>
+            <!-- /Galeria -->
+        </div>
+
+
+        <div class="col-md-5" id="direita">
+            <div class="divnomeproduto">
+                <h1 class="product-title">{{ product.name }}</h1>
+
+                <div class="productIdStars">
+                    <span>{% element 'product/rating' %}</span>
+
+                    {% set ranking = product.ranking %}
+                    {% if ranking %}
+                        <div style="display:none">Quantidade de avaliações: <span class="countStars">{{ ranking.count }}</span></div>
+                        <div style="display:none">Nota do produto: <span class="stars">{{ ranking.rating }}</span></div>
+                    {% endif %}
+                </div>
+
+                <div class="bloco">
+                    <div class="esquerda">
+                        {% if product.reference %}
+                            <h2><p class="product-details">SKU: <strong>{{ product.reference }}</strong></p></h2>
+                        {% else %}
+                            <h2><p class="product-details">Cód: <strong>{{ product.id }}</strong></p></h2>
+                        {% endif %}
+                        {% if product.brand != '' %}<h2><p class="product-details">Marca: <strong>{{ product.brand }}</strong></p></h2>{% endif %}
+                        {% if product.model != '' %}<h2><p class="product-details">Modelo: <strong>{{ product.model }}</strong></p></h2>{% endif %}
+                        {% if product.availability != '' %}<h2><p class="product-details">Disponibilidade: <strong>{{ product.availability }}</strong></p></h2>{% endif %}
+                    </div>
+                    <div class="direita">
+                        <div class="flags">
+                            <span class="fixed-shipping">FRETE FIXO R$10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form id="form_comprar" method="post" data-app="product.buy-form" action="{{ links.cart_add ~ product.id }}">
+                {% if not product.available %}
+                {% else %}
+
+                    <div id="span_erro_carrinho" class="blocoAlerta" style="display:none; margin-bottom:20px;">
+                        Selecione uma opção da variação do produto
+                    </div>
+
+
+
+                    {{ productHelper.bonus() }}
+
+
+                    {{ productHelper.variants() }}
+                    {{ productHelper.pricing() }}
+                    {{ productHelper.gifts() }}
+                    {{ product.additional_information }}
+
+
+                    <div class="bordaPrecoBot">
+                        <ul>
+                            <li class="cxQte">
+                                <div class="centerDiv">
+
+                                    <div data-app="product.quantity" id="quantidade">
+                                        <label>QTD:</label>
+                                        <input class="text" id="quant" name="quant" size="1" type="text" value="1" maxlength="5" />
+                                    </div>
+
+                                </div>
+                            </li>
+
+                            <li class="cxBotComprar">
+                                <div data-app="product.buy-button" id="bt_comprar" class="remove-bg" align="left">
+                                    {% if Image('buy') != '' %}
+                                        <button id="button-buy" type="submit">
+                                            <div class="botao-commerce-img">
+                                                {{ Image('buy') }}
+                                            </div>
+                                        </button>
+                                    {% else %}
+                                        <button id="button-buy" type="submit">
+                                            <div class="botao-commerce">
+                                                <div>Comprar</div>
+                                            </div>
+                                        </button>
+                                    {% endif %}
+                                    <div id="loading_btn" align="left" style="display:none">
+                                        <img src="https://images7.tcdn.com.br/assets/store/img/loading.gif">Calculando ...
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div><!-- Fim borda preço -->
+
+                    {% if Translation('ag_whatsapp') !='' %}
+                    <div class="msgmWhats">
+                        <a href="https://api.whatsapp.com/send?phone=55{{ Translation('ag_whatsapp') |replace({ '-':'', '.':'', '(':'', ')':'', ' ':'' }) }}" target="_blank">
+                          Compre também suas lentes com grau.<br />Envie sua receita pelo WhatsApp
+                          <svg class="icon icon-whatsapp-2" viewBox="0 0 32 32">
+                            <path fill="#e5e5e5" style="fill: var(--color4, #e5e5e5)" d="M0.743 32c-0.18 0-0.354-0.071-0.484-0.202-0.171-0.173-0.237-0.424-0.173-0.658l2.080-7.597c-1.295-2.342-1.978-4.991-1.977-7.681 0.004-8.746 7.121-15.862 15.867-15.862 4.242 0.002 8.228 1.654 11.224 4.652s4.644 6.984 4.643 11.222c-0.004 8.747-7.122 15.863-15.867 15.863 0 0-0.007 0-0.007 0-2.554-0.001-5.087-0.624-7.342-1.803l-7.792 2.043c-0.057 0.015-0.115 0.022-0.173 0.022z"></path>
+                            <path fill="#64b161" style="fill: var(--color5, #64b161)" d="M1.272 30.789l2.080-7.595c-1.283-2.223-1.958-4.744-1.957-7.327 0.003-8.081 6.58-14.656 14.66-14.656 3.922 0.002 7.603 1.528 10.37 4.298s4.291 6.453 4.29 10.369c-0.003 8.081-6.58 14.656-14.659 14.656-0.001 0 0 0 0 0h-0.007c-2.453-0.001-4.864-0.617-7.005-1.784z"></path>
+                            <path fill="#fff" style="fill: var(--color6, #fff)" d="M0.743 31.319l2.154-7.867c-1.329-2.303-2.028-4.914-2.027-7.59 0.003-8.371 6.815-15.181 15.186-15.181 4.062 0.002 7.875 1.583 10.742 4.452s4.445 6.684 4.444 10.741c-0.004 8.371-6.817 15.182-15.186 15.182-0 0 0 0 0 0h-0.007c-2.541-0.001-5.039-0.638-7.257-1.848zM9.166 26.46l0.461 0.273c1.938 1.15 4.159 1.758 6.424 1.759h0.005c6.957 0 12.619-5.661 12.622-12.619 0.001-3.372-1.31-6.542-3.693-8.928s-5.552-3.699-8.924-3.701c-6.962 0-12.624 5.66-12.627 12.618-0.001 2.384 0.666 4.706 1.93 6.715l0.3 0.478-1.275 4.656z"></path>
+                            <path fill="#fff" style="fill: var(--color6, #fff)" d="M12.261 9.515c-0.284-0.632-0.584-0.645-0.854-0.656-0.221-0.010-0.474-0.009-0.727-0.009s-0.664 0.095-1.012 0.475c-0.348 0.38-1.328 1.298-1.328 3.165s1.36 3.671 1.55 3.925c0.19 0.253 2.625 4.207 6.482 5.728 3.205 1.264 3.857 1.013 4.553 0.949s2.245-0.918 2.561-1.804c0.316-0.886 0.316-1.645 0.221-1.804s-0.348-0.253-0.727-0.443-2.245-1.108-2.593-1.234c-0.348-0.127-0.601-0.19-0.854 0.19s-0.98 1.234-1.201 1.487c-0.221 0.254-0.443 0.285-0.822 0.095s-1.602-0.591-3.051-1.883c-1.128-1.006-1.89-2.248-2.111-2.628s-0.004-0.567 0.167-0.774c0.307-0.373 0.822-1.044 0.948-1.297s0.063-0.475-0.031-0.665c-0.095-0.19-0.833-2.066-1.17-2.817z"></path>
+                          </svg>
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if product.additional_message != '' %}
+                    <div class="bordaPrecoBot msgnAdd">
+                        {{ product.additional_message }}
+                    </div>
+                    {% endif %}
+
+                    {% if product.description_small != '' %}
+                    <div class="bordaPrecoBot descrSmall">
+                        <div class="txt-desc-produto">
+                            <p class="descriptionSmall">{{ product.description_small }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    
+                        {{ productHelper.shipping() }}
+                        <div class="shipping-result"></div>
+                    
+
+                {% endif %}
+            </form>
+
+            <div class="clearboth"></div>
+
+
+            <!--{% element 'snippets/social-Product' %}-->
+            {{ productHelper.social() }}
+
+
+        </div> <!-- /#direita .col-sm-6 -->
+    </div> <!-- /.row -->
+
+</div>
+
+
+{% if productHelper.bundle %}
+<div class="comprejuntoprod">
+    <h3 class="showcase-title">
+        APROVEITE E COMPRE JUNTO
+        <div class="borderBtmTit"></div>
+    </h3>
+
+    {{ productHelper.bundle() }}
+</div>
+{% endif %}
+
+
+
+
+
+<div id="ProdBlock">
+    <div id="loading-tab-container">
+        <img src='{{ tray.paths.system_image }}/big-loading.svg' style="display:none;" />
+    </div>
+    <a name="formaPagto"></a>
+
+    <div id="ProdAbas" class="abasProduto">
+        <ul>
+            {% for key, tab in productTabs %}
+                {% if tab.container_id %}
+                    <li id="{{ tab.id }}" class="{% if key=='description' %}aberta{% endif %} {{ tab.description | lower | replace({ ' ':'-', 'á':'a', 'ã':'a', 'é':'e', 'í':'i', 'ó':'o', 'õ':'o', 'ú':'u', 'ç':'c' }) }}">
+                        <a href="#" data-tab-container-id="{{ tab.container_id }}" data-tab-url="{{ tab.url }}">
+                            {{ tab.description }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div id="descricao" class="prodBox">
+        <div class="board">
+            <div class="board_htm description">
+                <h2><div>{{ product.description ? product.description : product.description_small }}</div></h2>
+            </div>
+        </div>
+    </div>
+
+    <div id="itensInclusos" class="prodBox">
+        <div class="board">
+            {{ product.included_items }}
+        </div>
+    </div>
+
+    <!--
+    <div id="coments" class="prodBox">
+        <div class="board">
+            {% element 'product/comments' %}
+        </div>
+    </div>
+    -->
+
+    <div id="caracteristicas" class="prodBox">
+        <div class='board'>
+            {% element 'product/properties' %}
+        </div>
+    </div>
+
+
+    {{ productTabs.custom.content }}
+    {{ productTabs.downloads.content }}
+
+
+    <div id="garantia" class="prodBox">
+        <img class="loader" src="{{ tray.paths.system_image }}/big-loading.svg" style="display:none;" /> 
+    </div>
+    <div data-app="product.payment-methods" id="formasPagto" class="prodBox" style="display:none;"></div> 
+</div> 
+
+
+<div class="comentarioDescricaoProd"> 
+    {% element 'product/comments' %}   
+</div> 
+
+
+{% if product.related_products %}
+<div class="products-related">
+
+    <h4 class="showcase-title"> 
+        Veja também 
+        <div class="borderBtmTit"></div> 
+    </h4> 
+
+    <div class="row product-list"> 
+    {% for related in product.related_products %} 
+          <div class="col-sm-3 product"> 
+              {% element 'snippets/product' {"product": related} %} 
+          </div> 
+    {% endfor %} 
+    </div> 
+</div> 
+{% endif %} 
